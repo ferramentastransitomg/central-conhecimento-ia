@@ -243,7 +243,7 @@ export default function NovoDocumentoPage() {
               ].map(({ type, icon: Icon, title, desc }) => (
                 <button
                   key={type}
-                  onClick={() => { setSourceType(type); if (type === 'manual') setStep(3) }}
+                  onClick={() => { setSourceType(type); if (type === 'manual') setStep(3); else setStep(2); }}
                   className={`card p-6 text-left hover:shadow-md transition-all group ${ sourceType === type && step > 1 ? 'ring-2 ring-brand-500' : '' }`}
                 >
                   <div className="w-12 h-12 rounded-xl bg-brand-100 dark:bg-brand-950/40 flex items-center justify-center mb-4 group-hover:bg-brand-200 dark:group-hover:bg-brand-900/50 transition-colors">
