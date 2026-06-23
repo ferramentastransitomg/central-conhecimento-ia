@@ -6,7 +6,7 @@ import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import {
   LayoutDashboard, FileText, Plus, FolderOpen,
-  Settings, BarChart3, LogOut, BookOpen, Tag
+  Settings, BarChart3, LogOut, BookOpen, Tag, Users
 } from 'lucide-react'
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
   { href: '/admin/documentos', label: 'Documentos', icon: FileText },
   { href: '/admin/novo', label: 'Novo documento', icon: Plus },
   { href: '/admin/categorias', label: 'Categorias', icon: Tag },
+  { href: '/admin/usuarios', label: 'Usuários', icon: Users },
   { href: '/admin/diagnostico', label: 'Diagnóstico IA', icon: BarChart3 },
   { href: '/admin/configuracoes', label: 'Configurações', icon: Settings },
 ]
@@ -40,21 +41,25 @@ export function AdminSidebar({ userEmail }: AdminSidebarProps) {
   return (
     <aside className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-surface-900 border-r border-surface-200 dark:border-surface-800 flex flex-col z-40">
       {/* Logo */}
-      <div className="h-16 flex items-center gap-3 px-5 border-b border-surface-200 dark:border-surface-800">
+      <Link
+        href="/admin"
+        className="h-16 flex items-center gap-3 px-5 border-b border-surface-200 dark:border-surface-800 hover:bg-surface-50 dark:hover:bg-surface-800/40 transition-colors cursor-pointer"
+      >
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center flex-shrink-0">
           <BookOpen className="w-4 h-4 text-white" />
         </div>
-        <div className="min-w-0">
+        <div className="min-w-0 text-left">
           <p className="font-bold text-sm text-surface-900 dark:text-surface-100 leading-tight truncate">
             Central de Conhecimento
           </p>
           <p className="text-xs text-surface-400">Administração</p>
         </div>
-      </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => (
+
           <Link
             key={item.href}
             href={item.href}
