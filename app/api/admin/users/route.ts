@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const supabase = createServerSupabaseClient()
+    const supabase = createServerSupabaseClient() as any
     
     // Listar usuários do Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.admin.listUsers()
@@ -31,8 +31,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Combinar informações
-    const users = authData.users.map((user) => {
-      const profile = profiles?.find((p) => p.id === user.id)
+    const users = authData.users.map((user: any) => {
+      const profile = profiles?.find((p: any) => p.id === user.id)
       return {
         id: user.id,
         email: user.email,
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Campos obrigatórios ausentes' }, { status: 400 })
     }
 
-    const supabase = createServerSupabaseClient()
+    const supabase = createServerSupabaseClient() as any
 
     // Criar usuário no Auth
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
