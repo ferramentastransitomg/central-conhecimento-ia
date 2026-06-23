@@ -15,7 +15,7 @@ export default async function UsuariosPage() {
         </p>
       </div>
 
-      <UserManagement currentUserEmail={session.user.email || ''} />
+      <UserManagement currentUserEmail={session?.user?.email || ''} />
     </div>
   )
 }

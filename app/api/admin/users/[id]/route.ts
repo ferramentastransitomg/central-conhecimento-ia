@@ -14,7 +14,7 @@ export async function DELETE(
   }
 
   // Não permitir que o usuário exclua a si mesmo
-  if (session.user.id === params.id) {
+  if (session?.user?.id === params.id) {
     return NextResponse.json({ error: 'Você não pode excluir a sua própria conta' }, { status: 400 })
   }
 

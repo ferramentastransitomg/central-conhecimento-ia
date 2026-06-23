@@ -15,9 +15,9 @@ export async function GET(request: NextRequest) {
     
     // Listar usuários do Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.admin.listUsers()
-    if (authError) {
+    if (authError || !authData) {
       console.error('Erro ao listar usuários Auth:', authError)
-      return NextResponse.json({ error: 'Erro ao buscar usuários do Auth: ' + authError.message }, { status: 500 })
+      return NextResponse.json({ error: 'Erro ao buscar usuários do Auth: ' + (authError?.message || 'Sem dados') }, { status: 500 })
     }
 
     // Listar perfis do banco
@@ -72,9 +72,9 @@ export async function POST(request: NextRequest) {
       email_confirm: true,
     })
 
-    if (authError) {
+    if (authError || !authData) {
       console.error('Erro ao criar usuário no Auth:', authError)
-      return NextResponse.json({ error: authError.message }, { status: 400 })
+      return NextResponse.json({ error: authError?.message || 'Erro ao criar usuário' }, { status: 400 })
     }
 
     const newUser = authData.user
