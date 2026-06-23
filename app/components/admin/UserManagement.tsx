@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { toast } from '@/app/components/ui/Toast'
-import { Users, UserPlus, Trash2, Key, Mail, User, ShieldAlert } from 'lucide-react'
+import { Users, UserPlus, Trash2, Key, Mail, User } from 'lucide-react'
 
 interface UserItem {
   id: string

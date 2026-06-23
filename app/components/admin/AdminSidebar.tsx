@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import {
-  LayoutDashboard, FileText, Plus, FolderOpen,
+  LayoutDashboard, FileText, Plus,
   Settings, BarChart3, LogOut, BookOpen, Tag, Users
 } from 'lucide-react'
 
