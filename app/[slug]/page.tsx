@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import { createSSRServerClient } from '@/lib/supabase-server'
 import { createServerSupabaseClient } from '@/lib/supabase'
 import { getPublicKnowledgeUrl, getCanonicalUrl } from '@/lib/urls'
 import { PublicHeader } from '@/app/components/public/PublicHeader'
@@ -13,8 +12,19 @@ interface PageProps {
   params: { slug: string }
 }
 
+function safeFormatDate(dateStr: string | null | undefined, formatStr: string) {
+  if (!dateStr) return ''
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return ''
+    return format(d, formatStr, { locale: ptBR })
+  } catch {
+    return ''
+  }
+}
+
 async function getItem(slug: string) {
-  const supabase = createSSRServerClient()
+  const supabase = createServerSupabaseClient()
   const { data, error } = await supabase
     .from('knowledge_items')
     .select('*, categories(*)')
@@ -167,7 +177,7 @@ export default async function SlugPage({ params }: PageProps) {
                   <Calendar className="w-4 h-4 text-surface-400 flex-shrink-0" />
                   <span className="text-surface-500">Data do documento:</span>
                   <span className="text-surface-700 dark:text-surface-200">
-                    {format(new Date(item.document_date), 'dd/MM/yyyy', { locale: ptBR })}
+                    {safeFormatDate(item.document_date, 'dd/MM/yyyy')}
                   </span>
                 </div>
               )}
@@ -176,7 +186,7 @@ export default async function SlugPage({ params }: PageProps) {
                   <Calendar className="w-4 h-4 text-surface-400 flex-shrink-0" />
                   <span className="text-surface-500">Publicado em:</span>
                   <span className="text-surface-700 dark:text-surface-200">
-                    {format(new Date(item.published_at), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+                    {safeFormatDate(item.published_at, "dd 'de' MMMM 'de' yyyy")}
                   </span>
                 </div>
               )}
@@ -185,7 +195,7 @@ export default async function SlugPage({ params }: PageProps) {
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                   <span className="text-surface-500">Verificado em:</span>
                   <span className="text-surface-700 dark:text-surface-200">
-                    {format(new Date(item.last_checked_at), "dd/MM/yyyy", { locale: ptBR })}
+                    {safeFormatDate(item.last_checked_at, "dd/MM/yyyy")}
                   </span>
                 </div>
               )}
@@ -270,7 +280,7 @@ export default async function SlugPage({ params }: PageProps) {
               </div>
             </div>
             <p className="text-xs text-surface-400 mt-4 text-center">
-              Última atualização: {format(new Date(item.updated_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+              Última atualização: {safeFormatDate(item.updated_at, "dd/MM/yyyy 'às' HH:mm")}
             </p>
           </footer>
         </article>
