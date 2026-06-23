@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createSSRServerClient } from '@/lib/supabase-server'
 import { ThemeToggle } from '@/app/components/ui/ThemeToggle'
-import { BookOpen, Search } from 'lucide-react'
+import { BookOpen, LogIn } from 'lucide-react'
 
 export async function PublicHeader() {
   let platformName = 'Central de Conhecimento para IA'
@@ -27,10 +27,19 @@ export async function PublicHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1">
+        <nav className="flex items-center gap-3">
           <ThemeToggle />
+          <Link
+            href="/admin"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-surface-600 dark:text-surface-400 hover:text-brand-600 dark:hover:text-brand-400 border border-surface-200 dark:border-surface-800 rounded-lg hover:bg-surface-50 dark:hover:bg-surface-800/50 transition-all"
+            title="Painel de Controle"
+          >
+            <LogIn className="w-3.5 h-3.5" />
+            <span>Painel</span>
+          </Link>
         </nav>
       </div>
     </header>
   )
 }
+
